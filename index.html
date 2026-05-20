@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Новская Надежда | Международный проектный продюсер в здравоохранении</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #b8944e;
+  --gold-light: #d4b06a;
+  --gold-dark: #8a6e2f;
+  --cream: #fdf8f0;
+  --dark: #1a1410;
+  --dark2: #2a221c;
+  --text: #3d342e;
+  --text-light: #7a6e64;
+  --white: #ffffff;
+  --border: rgba(184, 148, 78, 0.15);
+  --shadow: 0 20px 60px rgba(0,0,0,0.06);
+  --radius: 16px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; }
+
+/* LOADER */
+#loader {
+  position: fixed; inset: 0; background: var(--dark); z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#loader.hidden { opacity: 0; visibility: hidden; }
+.loader-ring { width: 60px; height: 60px; border-radius: 50%; border: 2px solid rgba(184,148,78,0.1); border-top-color: var(--gold); animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 1.2rem 3rem; display: flex; justify-content: space-between; align-items: center;
+  transition: all 0.4s ease;
+}
+nav.scrolled {
+  background: rgba(26, 20, 16, 0.95); backdrop-filter: blur(20px);
+  padding: 0.8rem 3rem; border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1rem; text-decoration: none; letter-spacing: 3px; text-transform: uppercase; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
+.hamburger span { width: 24px; height: 1.5px; background: var(--gold); transition: all 0.3s; }
+
+/* HERO */
+.hero {
+  position: relative; min-height: 100vh; display: flex; align-items: center;
+  background: var(--dark); overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(184,148,78,0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 50%, rgba(184,148,78,0.05) 0%, transparent 60%);
+}
+.hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1200px; margin: 0 auto; padding: 2rem 3rem; align-items: center; position: relative; z-index: 1; width: 100%; }
+.hero-text { opacity: 0; transform: translateY(30px); animation: fadeUp 1s ease 0.3s forwards; }
+.hero-badge {
+  display: inline-block; padding: 0.4rem 1.2rem;
+  border: 1px solid rgba(184,148,78,0.3); color: var(--gold-light);
+  font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 1.5rem; font-weight: 400;
+}
+.hero h1 { font-size: clamp(2.2rem, 4vw, 3.8rem); color: var(--white); line-height: 1.2; margin-bottom: 0.5rem; }
+.hero h1 span { background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-sub { font-size: clamp(1rem, 1.5vw, 1.2rem); color: rgba(255,255,255,0.5); margin-bottom: 1.5rem; font-weight: 300; letter-spacing: 1px; }
+.hero-desc { font-size: 0.95rem; color: rgba(255,255,255,0.55); line-height: 1.8; max-width: 500px; margin-bottom: 2rem; font-weight: 300; }
+.hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.9rem 2rem;
+  font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 500;
+  text-decoration: none; letter-spacing: 1px; cursor: pointer;
+  transition: all 0.4s; border: none;
+}
+.btn-primary { background: var(--gold); color: var(--white); }
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(184,148,78,0.3); }
+.btn-outline { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.2); }
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+.hero-photo { position: relative; display: flex; justify-content: center; opacity: 0; transform: translateX(30px); animation: fadeUp 1s ease 0.6s forwards; }
+.hero-photo-inner {
+  width: 380px; height: 480px; border-radius: 20px; overflow: hidden;
+  position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+}
+.hero-photo-inner img { width: 100%; height: 100%; object-fit: cover; }
+.hero-photo-inner::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(26,20,16,0.4));
+}
+.hero-photo-border {
+  position: absolute; top: -8px; left: -8px; right: 8px; bottom: 8px;
+  border: 1px solid rgba(184,148,78,0.2); border-radius: 24px; z-index: -1;
+}
+.hero-scroll {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  color: rgba(255,255,255,0.3); font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem; z-index: 1;
+}
+.scroll-line { width: 1px; height: 40px; background: linear-gradient(180deg, var(--gold), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+/* SECTIONS */
+section { padding: 6rem 3rem; position: relative; }
+.section-label {
+  text-align: center; font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.5rem; font-weight: 500;
+}
+.section-title {
+  text-align: center; font-size: clamp(1.8rem, 3vw, 2.8rem); color: var(--dark);
+  margin-bottom: 1rem;
+}
+.section-desc {
+  text-align: center; color: var(--text-light); max-width: 600px; margin: 0 auto 4rem;
+  font-size: 0.95rem; line-height: 1.8; font-weight: 300;
+}
+.section-divider { width: 60px; height: 2px; background: var(--gold); margin: 1rem auto 0.5rem; }
+
+/* ABOUT */
+.about { background: var(--white); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1100px; margin: 3rem auto 0; }
+.about-text p { line-height: 1.9; margin-bottom: 1.2rem; font-size: 0.95rem; color: var(--text); }
+.about-text strong { color: var(--dark); }
+.about-highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+.highlight-item { display: flex; gap: 0.8rem; align-items: flex-start; font-size: 0.9rem; color: var(--text); }
+.highlight-icon { color: var(--gold); font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+
+/* STATS */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; background: var(--dark); padding: 3rem; border-radius: var(--radius); }
+.stat-item { text-align: center; padding: 1rem; border-right: 1px solid rgba(255,255,255,0.06); }
+.stat-item:last-child { border-right: none; }
+.stat-num { font-size: 2.2rem; font-weight: 700; color: var(--gold); font-family: 'Playfair Display', serif; }
+.stat-num span { font-size: 1rem; }
+.stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 0.3rem; letter-spacing: 2px; text-transform: uppercase; }
+
+/* CREDENTIALS */
+.credentials { background: var(--cream); }
+.cred-grid { display: grid; gap: 1.5rem; margin: 0 auto; }
+.cred-card { background: var(--white); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); border: 1px solid var(--border); transition: all 0.4s; }
+.cred-card:hover { transform: translateY(-4px); box-shadow: 0 25px 70px rgba(0,0,0,0.08); }
+.cred-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
+.cred-card h3 { font-size: 1.1rem; color: var(--dark); margin-bottom: 0.5rem; }
+.cred-card p { font-size: 0.88rem; color: var(--text-light); line-height: 1.7; }
+.cred-card .tag {
+  display: inline-block; padding: 0.2rem 0.7rem; background: rgba(184,148,78,0.1);
+  color: var(--gold-dark); font-size: 0.7rem; letter-spacing: 1px; border-radius: 2px; margin-top: 0.8rem;
+}
+
+/* PROCESS */
+.process { background: var(--white); }
+.process-steps { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+.step-card { text-align: center; padding: 2rem 1.5rem; position: relative; }
+.step-num {
+  width: 48px; height: 48px; border-radius: 50%; background: var(--gold);
+  color: var(--white); font-family: 'Playfair Display', serif; font-size: 1.2rem;
+  display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;
+}
+.step-card h4 { font-size: 1rem; color: var(--dark); margin-bottom: 0.5rem; }
+.step-card p { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; }
+
+/* BRICS + SPEAKING */
+.speaking { background: var(--dark); color: var(--white); }
+.speaking .section-title { color: var(--white); }
+.speaking .section-desc { color: rgba(255,255,255,0.5); }
+.speak-grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.speak-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius); padding: 2rem; transition: all 0.4s;
+}
+.speak-card:hover { background: rgba(255,255,255,0.06); border-color: rgba(184,148,78,0.2); }
+.speak-card .icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+.speak-card h4 { font-size: 1rem; color: var(--white); margin-bottom: 0.3rem; }
+.speak-card .loc { font-size: 0.8rem; color: var(--gold); margin-bottom: 0.8rem; letter-spacing: 1px; }
+.speak-card p { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
+
+/* CURRENT */
+.current { background: linear-gradient(135deg, var(--cream), #f5ead0); }
+.current-content { max-width: 700px; margin: 0 auto; text-align: center; }
+.current-content p { font-size: 1rem; line-height: 1.9; color: var(--text); margin-bottom: 1.5rem; }
+.current-tag {
+  display: inline-block; padding: 0.4rem 1.2rem; background: var(--gold); color: var(--white);
+  font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; border-radius: 2px; margin-bottom: 1rem;
+}
+
+/* CONTACT */
+.contact { background: var(--dark); color: var(--white); }
+.contact .section-title { color: var(--white); }
+.contact-wrapper { max-width: 800px; margin: 0 auto; }
+.contact-card {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius); padding: 3rem; text-align: center;
+}
+.contact-photo {
+  width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+  border: 3px solid var(--gold); margin: 0 auto 1.5rem; display: block;
+}
+.contact-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--white); margin-bottom: 0.3rem; }
+.contact-role { font-size: 0.85rem; color: var(--gold); margin-bottom: 1.5rem; letter-spacing: 1px; }
+.contact-details { display: flex; flex-direction: column; gap: 0.6rem; max-width: 350px; margin: 0 auto; }
+.contact-details a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
+.contact-details a:hover { color: var(--gold); }
+.contact-details .hint { font-size: 0.8rem; color: rgba(255,255,255,0.3); margin-top: 0.5rem; }
+
+/* FOOTER */
+footer { background: #0d0a08; padding: 2rem 3rem; text-align: center; color: rgba(255,255,255,0.25); font-size: 0.75rem; border-top: 1px solid rgba(255,255,255,0.03); }
+footer .gold { color: var(--gold); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease; }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+  .hero-desc { margin: 0 auto 2rem; }
+  .hero-cta { justify-content: center; }
+  .hero-photo-inner { width: 280px; height: 350px; }
+  .hero-photo { order: -1; }
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .stats { grid-template-columns: repeat(2, 1fr); gap: 0; }
+  .stat-item:nth-child(2) { border-right: none; }
+  .stat-item:nth-child(1), .stat-item:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,0.06); padding: 1.5rem 1rem; }
+  .stat-item:nth-child(3), .stat-item:nth-child(4) { padding: 1.5rem 1rem; }
+  section { padding: 4rem 1.5rem; }
+  nav { padding: 1rem 1.5rem; }
+  nav.scrolled { padding: 0.8rem 1.5rem; }
+  .nav-links {
+    display: none; position: fixed; inset: 0; background: rgba(26,20,16,0.98);
+    flex-direction: column; align-items: center; justify-content: center; gap: 2rem; z-index: 99;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 1rem; }
+  .hamburger { display: flex; z-index: 100; }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  .about-highlights { grid-template-columns: 1fr; }
+  .cred-grid { grid-template-columns: 1fr !important; }
+  .cred-grid .cred-card { grid-column: 1/-1 !important; }
+}
+</style>
+</head>
+<body>
+
+<div id="loader"><div class="loader-ring"></div></div>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">Nadezhda Novskaya</a>
+  <button class="hamburger" id="hamburger" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#about">Обо мне</a></li>
+    <li><a href="#credentials">Опыт</a></li>
+    <li><a href="#process">Как я работаю</a></li>
+    <li><a href="#speaking">Выступления</a></li>
+    <li><a href="#blog">Блог</a></li>
+    <li><a href="#contact">Контакты</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid">
+    <div class="hero-text">
+      <div class="hero-badge">Индивидуальный предприниматель</div>
+      <h1>Новская<br><span>Надежда</span></h1>
+      <p class="hero-sub">Международный проектный продюсер в здравоохранении</p>
+      <p class="hero-desc">Работаю на стыке медицины и международного бизнеса — создаю образовательные программы и организую выезды за рубеж для главных врачей и министров здравоохранения. Рынок — госсектор России.</p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-primary">Связаться</a>
+        <a href="#credentials" class="btn btn-outline">Мой опыт</a>
+      </div>
+      <div style="margin-top:1.5rem;display:flex;align-items:center;gap:1rem">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://t.me/msHope_Nadezhda&bgcolor=1a1410&color=d4b06a" alt="Telegram QR" style="width:90px;height:90px;border-radius:8px;border:1px solid rgba(184,148,78,0.2);flex-shrink:0">
+        <div>
+          <div style="font-size:0.75rem;color:var(--gold);letter-spacing:1px">Telegram</div>
+          <div style="font-size:0.85rem;color:rgba(255,255,255,0.4)">@msHope_Nadezhda</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="hero-photo-border"></div>
+      <div class="hero-photo-inner">
+        <img src="Новская.png" alt="Новская Надежда">
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Листайте</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="section-label reveal">Обо мне</div>
+  <h2 class="section-title reveal">На стыке медицины и международного бизнеса</h2>
+  <div class="section-divider reveal"></div>
+  <p class="section-desc reveal">За 10 лет организовала 85 мероприятий с участием более 20 000 человек</p>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>Я — международный проектный продюсер в здравоохранении. Работаю на стыке медицины и международного бизнеса — создаю образовательные программы и организую выезды за рубеж для главных врачей и министров здравоохранения. Рынок — госсектор России.</p>
+      <p>Работаю в партнёрстве с <strong>Российско-Китайской Палатой</strong> и аппаратами Губернаторов регионов РФ. Взаимодействую преимущественно с государственным сектором (GR) и частично с B2B.</p>
+      <div class="about-highlights">
+        <div class="highlight-item"><span class="highlight-icon">✦</span> Бизнес-выезды для главврачей и министров здравоохранения</div>
+        <div class="highlight-item"><span class="highlight-icon">✦</span> Образовательные программы с экспертным составом</div>
+        <div class="highlight-item"><span class="highlight-icon">✦</span> Партнёрство с госструктурами и международными палатами</div>
+        <div class="highlight-item"><span class="highlight-icon">✦</span> Полный цикл: от идеи до реализации</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="stats" style="grid-template-columns:repeat(4,1fr);">
+        <div class="stat-item"><div class="stat-num">69</div><div class="stat-label">Российских мероприятий</div></div>
+        <div class="stat-item"><div class="stat-num">16</div><div class="stat-label">Международных</div></div>
+        <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Онлайн-проектов</div></div>
+        <div class="stat-item" style="border-right:none"><div class="stat-num">20 000+</div><div class="stat-label">Участников</div></div>
+      </div>
+      <div style="margin-top:1.5rem;text-align:center">
+        <p style="font-size:0.75rem;color:rgba(255,255,255,0.3);letter-spacing:2px;text-transform:uppercase;margin-bottom:0.8rem">География проектов</p>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem">
+          <span style="padding:0.3rem 0.8rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:4px;font-size:0.75rem;color:rgba(255,255,255,0.6)">Китай</span>
+          <span style="padding:0.3rem 0.8rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:4px;font-size:0.75rem;color:rgba(255,255,255,0.6)">Израиль</span>
+          <span style="padding:0.3rem 0.8rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:4px;font-size:0.75rem;color:rgba(255,255,255,0.6)">Грузия</span>
+          <span style="padding:0.3rem 0.8rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:4px;font-size:0.75rem;color:rgba(255,255,255,0.6)">Чехия</span>
+          <span style="padding:0.3rem 0.8rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:4px;font-size:0.75rem;color:rgba(255,255,255,0.6)">Казахстан</span>
+          <span style="padding:0.3rem 0.8rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:4px;font-size:0.75rem;color:rgba(255,255,255,0.6)">Латвия</span>
+          <span style="padding:0.3rem 0.8rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:4px;font-size:0.75rem;color:rgba(255,255,255,0.6)">Испания</span>
+          <span style="padding:0.3rem 0.8rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:4px;font-size:0.75rem;color:rgba(255,255,255,0.6)">Кипр</span>
+          <span style="padding:0.3rem 0.8rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:4px;font-size:0.75rem;color:rgba(255,255,255,0.6)">Турция</span>
+          <span style="padding:0.3rem 0.8rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:4px;font-size:0.75rem;color:rgba(255,255,255,0.6)">Египет</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="credentials" id="credentials">
+  <div class="section-label reveal">Компетенции</div>
+  <h2 class="section-title reveal">Мой опыт и достижения</h2>
+  <div class="section-divider reveal"></div>
+  <p class="section-desc reveal">Более 10 лет реализую проекты в сфере здравоохранения на международном уровне</p>
+  <div class="cred-grid" style="grid-template-columns:repeat(3,1fr);max-width:1000px">
+    <div class="cred-card reveal">
+      <span class="cred-icon">&#x1F30D;</span>
+      <h3>Международные бизнес-выезды</h3>
+      <p>Организую профессиональные стажировки и бизнес-миссии для руководителей здравоохранения в страны Азии и по всему миру. Полный цикл: концепция, партнёрство, программа, логистика, сопровождение.</p>
+      <span class="tag">Корея · Китай · Азия</span>
+    </div>
+    <div class="cred-card reveal">
+      <span class="cred-icon">&#x1F393;</span>
+      <h3>Образовательные программы</h3>
+      <p>Создаю с нуля образовательные программы с привлечением экспертного состава. Разрабатываю содержание, привлекаю лекторов, организую учебный процесс для госслужащих и медицинских работников.</p>
+      <span class="tag">Экспертный состав</span>
+    </div>
+    <div class="cred-card reveal">
+      <span class="cred-icon">&#x1F3A4;</span>
+      <h3>Выступления на форумах</h3>
+      <p>Выступала на Международном Муниципальном Форуме БРИКС (Санкт-Петербург, 2025) с докладом об организации бизнес-конференций в здравоохранении. Также выступала в Государственной Думе РФ и на международном саммите в Индии с проектом по ЭКО.</p>
+      <span class="tag">БРИКС · Госдума · Индия</span>
+    </div>
+    <div class="cred-card reveal" style="grid-column:2/3">
+      <span class="cred-icon">&#x1F91D;</span>
+      <h3>Партнёрство с госструктурами</h3>
+      <p>Работаю в партнёрстве с Российско-Китайской Палатой и аппаратами Губернаторов регионов РФ. Выстраиваю эффективное взаимодействие между российскими и зарубежными государственными структурами.</p>
+      <span class="tag">GR · Госсектор</span>
+    </div>
+  </div>
+  <div class="reveal" style="max-width:1000px;margin:2.5rem auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:0.8rem">
+    <img src="brics_slide9_7.jpeg" alt="Фото с мероприятия" loading="lazy" style="width:100%;height:200px;object-fit:cover;border-radius:8px;border:1px solid var(--border)">
+    <img src="brics_slide9_2.jpeg" alt="Фото с мероприятия" loading="lazy" style="width:100%;height:200px;object-fit:cover;border-radius:8px;border:1px solid var(--border)">
+    <img src="brics_slide9_0.jpeg" alt="Фото с мероприятия" loading="lazy" style="width:100%;height:200px;object-fit:cover;border-radius:8px;border:1px solid var(--border)">
+    <img src="brics_slide9_8.jpg" alt="Фото с мероприятия" loading="lazy" style="width:100%;height:200px;object-fit:cover;border-radius:8px;border:1px solid var(--border)">
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="section-label reveal">Как я работаю</div>
+  <h2 class="section-title reveal">Мой подход к реализации проектов</h2>
+  <div class="section-divider reveal"></div>
+  <p class="section-desc reveal">Каждый проект проходит чёткий цикл от идеи до успешной реализации</p>
+  <div class="process-steps">
+    <div class="step-card reveal">
+      <div class="step-num">1</div>
+      <h4>Идея проекта</h4>
+      <p>Придумываю концепцию и определяю сферу, которая будет востребована и полезна</p>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-num">2</div>
+      <h4>Партнёр за рубежом</h4>
+      <p>Нахожу надёжного партнёра в целевой стране — клинику, университет или ассоциацию</p>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-num">3</div>
+      <h4>Партнёр в России</h4>
+      <p>Привлекаю российского партнёра — министерство, палату или профильную организацию</p>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-num">4</div>
+      <h4>Создание продукта</h4>
+      <p>Разрабатываю ТЗ, собираю КП, формирую программу мероприятия, просчитываю экономику</p>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-num">5</div>
+      <h4>Продажа госсектору</h4>
+      <p>Предлагаю готовый продукт на рынок РФ, работаю с аппаратами губернаторов и Минздравами</p>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-num">6</div>
+      <h4>Реализация</h4>
+      <p>Провожу мероприятие, сопровождаю участников, подвожу итоги и закрываю проект</p>
+    </div>
+  </div>
+</section>
+
+<section class="speaking" id="speaking">
+  <div class="section-label reveal" style="color: var(--gold);">Выступления</div>
+  <h2 class="section-title reveal">Где я выступала</h2>
+  <div class="section-divider reveal"></div>
+  <p class="section-desc reveal">Представляла проекты в сфере репродуктивного здоровья и международного сотрудничества на площадках высокого уровня</p>
+  <div class="speak-grid">
+    <div class="speak-card reveal">
+      <span class="icon">&#x1F30F;</span>
+      <h4>Международный Муниципальный Форум БРИКС</h4>
+      <div class="loc">Санкт-Петербург, октябрь 2025</div>
+      <p>Выступление с докладом «Организация международных бизнес-конференций в здравоохранении» на круглом столе «Международный туризм: спрос и предложение». Организатор: Российско-Китайская Палата.</p>
+      <video src="brics_speech.mp4" controls preload="metadata" style="width:100%;border-radius:8px;margin-top:1rem;height:240px;object-fit:cover;background:#000"></video>
+    </div>
+    <div class="speak-card reveal">
+      <span class="icon">&#x1F3DB;</span>
+      <h4>Государственная Дума РФ</h4>
+      <div class="loc">Москва, Россия</div>
+      <p>Представление инициатив и результатов образовательных программ с применением ИИ в сфере здравоохранения.</p>
+      <video src="duma_speech.mp4" controls preload="metadata" style="width:100%;border-radius:8px;margin-top:1rem;height:240px;object-fit:cover;background:#000"></video>
+    </div>
+    <div class="speak-card reveal">
+      <span class="icon">&#x1F4F0;</span>
+      <h4>Международный саммит в Индии — Global Startup Summit 2025</h4>
+      <div class="loc">Индия</div>
+      <p>Выступление с проектом по ЭКО на международном саммите. Представление российской практики репродуктивной медицины.</p>
+      <video src="india_speech.mp4" controls preload="metadata" style="width:100%;border-radius:8px;margin-top:1rem;height:240px;object-fit:cover;background:#000"></video>
+    </div>
+  </div>
+</section>
+
+<section class="current" id="blog">
+  <div class="section-label reveal">Сейчас в фокусе</div>
+  <h2 class="section-title reveal">Запускаю блог про здоровьесбережение</h2>
+  <div class="section-divider reveal"></div>
+  <div class="current-content reveal">
+    <div class="current-tag">Здоровьесбережение</div>
+    <p><strong>Здоровьесбережение — это не лечение болезней. Это их предотвращение.</strong> Лечение начинается, когда что-то уже сломалось. Здоровьесбережение — это система действий, которая не даёт сломаться.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;text-align:left;max-width:650px;margin:2rem auto">
+      <div style="background:rgba(184,148,78,0.08);padding:1.5rem;border-radius:12px;border:1px solid var(--border)">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem">&#x1F52C;</div>
+        <h4 style="font-size:0.95rem;color:var(--dark);margin-bottom:0.3rem">Регулярная диагностика</h4>
+        <p style="font-size:0.85rem;color:var(--text-light);line-height:1.6">Знать свои показатели до того, как появятся симптомы</p>
+      </div>
+      <div style="background:rgba(184,148,78,0.08);padding:1.5rem;border-radius:12px;border:1px solid var(--border)">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem">&#x1F33F;</div>
+        <h4 style="font-size:0.95rem;color:var(--dark);margin-bottom:0.3rem">Образ жизни как инструмент</h4>
+        <p style="font-size:0.85rem;color:var(--text-light);line-height:1.6">Питание, сон, движение — не советы, а управляемые параметры</p>
+      </div>
+      <div style="background:rgba(184,148,78,0.08);padding:1.5rem;border-radius:12px;border:1px solid var(--border)">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem">&#x1F9E0;</div>
+        <h4 style="font-size:0.95rem;color:var(--dark);margin-bottom:0.3rem">Здоровая голова</h4>
+        <p style="font-size:0.85rem;color:var(--text-light);line-height:1.6">Стресс, выгорание и ментальное состояние — часть системы, не отдельная тема</p>
+      </div>
+      <div style="background:rgba(184,148,78,0.08);padding:1.5rem;border-radius:12px;border:1px solid var(--border)">
+        <div style="font-size:1.5rem;margin-bottom:0.5rem">&#x1F4DA;</div>
+        <h4 style="font-size:0.95rem;color:var(--dark);margin-bottom:0.3rem">Медицинская грамотность</h4>
+        <p style="font-size:0.85rem;color:var(--text-light);line-height:1.6">Понимать анализы, читать рекомендации, не паниковать от диагнозов</p>
+      </div>
+    </div>
+    <div style="margin-top:2rem;padding:2rem;background:rgba(184,148,78,0.06);border-radius:16px;border:1px solid var(--border);max-width:600px;margin-left:auto;margin-right:auto">
+      <p style="font-size:0.95rem;margin-bottom:0.8rem">Мне интересны люди, у которых уже есть аудитория в этой теме — врачи, нутрициологи, эксперты по ЗОЖ. Если вы такой человек или знаете таких — давайте обменяемся контактами.</p>
+      <a href="#contact" class="btn btn-primary" style="display:inline-flex">Написать мне</a>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="section-label reveal" style="color: var(--gold);">Контакты</div>
+  <h2 class="section-title reveal">Свяжитесь со мной</h2>
+  <div class="section-divider reveal"></div>
+  <p class="section-desc reveal">Готова к сотрудничеству — международные проекты, образовательные программы, а также партнёрства по блогу о здоровьесбережении</p>
+  <div class="contact-wrapper">
+    <div class="contact-card reveal">
+      <img src="Новская.png" alt="Новская Надежда" class="contact-photo">
+      <div class="contact-name">Новская Надежда Витальевна</div>
+      <div class="contact-role">Международный проектный продюсер, директор по развитию в сфере здравоохранения АЛРИИ, индивидуальный предприниматель</div>
+      <div class="contact-details">
+        <a href="tel:+79152618202">+7 (915) 261-82-02</a>
+        <a href="mailto:n.filatova@orukovodstve.ru">n.filatova@orukovodstve.ru</a>
+        <a href="https://t.me/msHope_Nadezhda" target="_blank" style="color:var(--gold)">Telegram: @msHope_Nadezhda</a>
+        <div class="hint">Работаю с госсектором (GR) и B2B</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 <span class="gold">Новская Надежда Витальевна</span></p>
+  <p style="margin-top:0.5rem;color:rgba(255,255,255,0.35);font-size:0.78rem;line-height:1.6;max-width:500px;margin-left:auto;margin-right:auto">Международный проектный продюсер в здравоохранении. Индивидуальный предприниматель. Директор по развитию в сфере здравоохранения АЛРИИ</p>
+  <p style="margin-top:0.3rem;color:rgba(255,255,255,0.25);font-size:0.75rem">27111985@gmail.com</p>
+</footer>
+
+<script>
+window.addEventListener('load', () => { setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 800); });
+
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 80); });
+
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('nav-links');
+hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); navLinks.classList.toggle('open'); });
+navLinks.querySelectorAll('a').forEach(a => { a.addEventListener('click', () => { hamburger.classList.remove('open'); navLinks.classList.remove('open'); }); });
+
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+revealElements.forEach(el => revealObserver.observe(el));
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>

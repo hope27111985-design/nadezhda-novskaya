@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>II Международная стажировка «Здравоохранение Восточной Азии» | Сеул 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+:root {
+  --gold: #c9a84c;
+  --gold-light: #e8d5a3;
+  --red: #b22222;
+  --red-dark: #8b0000;
+  --cream: #faf5eb;
+  --dark: #2c1810;
+  --dark-blue: #1a1a2e;
+  --ink: #3d2b1f;
+  --sakura: #f7c9d6;
+  --sakura-dark: #e8a0b4;
+  --jade: #2e8b57;
+  --jade-light: #3cb371;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 { font-family: 'Noto Serif KR', serif; }
+
+#sakura-canvas {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 9999;
+}
+
+/* HERO */
+.hero {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; overflow: hidden;
+  background: linear-gradient(135deg, #1a0a0a 0%, #2c1810 30%, #1a1a2e 70%, #0d0d1a 100%);
+}
+.hero::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('Сеул/pngtree-views-of-seoul-skyline-from-above-image_13149599.jpg') center/cover no-repeat;
+  opacity: 0.25; animation: heroZoom 20s ease-in-out infinite alternate;
+}
+@keyframes heroZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+.hero-overlay {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.7) 100%);
+}
+.hero-pattern {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(201,168,76,0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(201,168,76,0.05) 0%, transparent 50%);
+}
+.hero-content { position: relative; z-index: 2; max-width: 900px; padding: 2rem; }
+.hero-badge {
+  display: inline-block; padding: 0.5rem 2rem;
+  border: 1px solid var(--gold); color: var(--gold);
+  font-size: 0.85rem; letter-spacing: 4px; text-transform: uppercase;
+  margin-bottom: 2rem;
+  opacity: 0; animation: fadeInDown 1s ease 0.5s forwards;
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-title {
+  font-size: clamp(2rem, 5vw, 4.5rem); color: var(--cream);
+  line-height: 1.3; margin-bottom: 0.5rem;
+  opacity: 0; animation: fadeInUp 1s ease 0.8s forwards;
+}
+.hero-title span {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.5rem); color: var(--gold-light);
+  letter-spacing: 6px; margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeInUp 1s ease 1s forwards;
+}
+.hero-date {
+  font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--sakura); margin-bottom: 2rem;
+  opacity: 0; animation: fadeInUp 1s ease 1.2s forwards;
+}
+.hero-date i { font-style: normal; display: inline-block; border: 1px solid var(--sakura-dark); padding: 0.3rem 1rem; border-radius: 2px; margin: 0 0.3rem; }
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-cta {
+  display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+  opacity: 0; animation: fadeInUp 1s ease 1.5s forwards;
+}
+.btn {
+  display: inline-block; padding: 1rem 2.5rem;
+  font-family: 'Noto Sans KR', sans-serif; font-size: 0.95rem;
+  font-weight: 500; text-decoration: none; letter-spacing: 2px;
+  cursor: pointer; transition: all 0.4s ease; position: relative; overflow: hidden;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold), #d4a84b);
+  color: var(--dark); border: none;
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(201,168,76,0.3); }
+.btn-outline {
+  background: transparent; color: var(--cream); border: 1px solid var(--cream);
+}
+.btn-outline:hover { background: var(--cream); color: var(--dark); transform: translateY(-3px); }
+.hero-line { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.5rem auto; opacity: 0; animation: fadeInUp 1s ease 0.9s forwards; }
+.hero-ornament { font-size: 2rem; color: var(--gold); opacity: 0.4; margin-bottom: 1rem; opacity: 0; animation: fadeInUp 1s ease 0.6s forwards; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  padding: 1rem 2rem; display: flex; justify-content: space-between;
+  align-items: center; transition: all 0.4s ease;
+}
+nav.scrolled {
+  background: rgba(26, 10, 10, 0.95);
+  backdrop-filter: blur(20px); padding: 0.7rem 2rem;
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+}
+.nav-logo { font-family: 'Noto Serif KR', serif; color: var(--gold); font-size: 1.1rem; text-decoration: none; letter-spacing: 2px; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; letter-spacing: 2px; transition: color 0.3s ease; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s ease; }
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
+.hamburger span { width: 25px; height: 2px; background: var(--gold); transition: all 0.3s ease; }
+
+/* SECTIONS */
+section { padding: 6rem 2rem; position: relative; }
+.section-title { text-align: center; margin-bottom: 4rem; }
+.section-title h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); color: var(--dark); margin-bottom: 1rem; }
+.section-title .subtitle { color: var(--gold); font-size: 0.9rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 0.5rem; }
+.section-title .divider { width: 80px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1rem auto; }
+.section-title p { color: #666; max-width: 600px; margin: 0 auto; line-height: 1.8; font-size: 0.95rem; }
+
+/* ABOUT */
+.about { background: var(--cream); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1200px; margin: 0 auto; align-items: center; }
+.about-image { position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
+.about-image img { width: 100%; height: 450px; object-fit: cover; display: block; transition: transform 0.6s ease; }
+.about-image:hover img { transform: scale(1.05); }
+.about-image::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(201,168,76,0.1), transparent); }
+.about-text h3 { font-size: 1.8rem; color: var(--dark); margin-bottom: 1.5rem; }
+.about-text p { line-height: 1.9; color: #555; margin-bottom: 1rem; font-size: 0.95rem; }
+.about-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem; }
+.stat-item { text-align: center; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: transform 0.3s ease; }
+.stat-item:hover { transform: translateY(-5px); }
+.stat-number { font-size: 2rem; font-weight: 700; color: var(--gold); font-family: 'Noto Serif KR', serif; }
+.stat-label { font-size: 0.8rem; color: #888; margin-top: 0.3rem; letter-spacing: 1px; }
+
+/* ORGANIZERS */
+.organizers { background: linear-gradient(135deg, #faf5eb 0%, #f5ead0 100%); }
+.organizers-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; max-width: 1000px; margin: 0 auto; }
+.org-card { background: white; padding: 2rem; border-radius: 8px; text-align: center; flex: 1; min-width: 250px; max-width: 300px; box-shadow: 0 5px 25px rgba(0,0,0,0.05); border: 1px solid rgba(201,168,76,0.1); transition: all 0.4s ease; }
+.org-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); border-color: var(--gold); }
+.org-card .icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+.org-card h4 { color: var(--dark); margin-bottom: 0.5rem; font-size: 1rem; }
+.org-card p { font-size: 0.85rem; color: #777; line-height: 1.6; }
+
+/* PROGRAM */
+.program { background: var(--dark); color: var(--cream); }
+.program .section-title h2 { color: var(--cream); }
+.program .section-title p { color: rgba(255,255,255,0.6); }
+.timeline { max-width: 900px; margin: 0 auto; position: relative; }
+.timeline::before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, var(--gold), transparent); }
+.timeline-day { margin-bottom: 3rem; position: relative; }
+.timeline-day:nth-child(odd) .day-content { margin-left: auto; padding-left: 3rem; }
+.timeline-day:nth-child(even) .day-content { margin-right: auto; padding-right: 3rem; text-align: right; }
+.day-marker { position: absolute; left: 50%; transform: translateX(-50%); width: 40px; height: 40px; background: linear-gradient(135deg, var(--gold), #d4a84b); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; color: var(--dark); z-index: 2; box-shadow: 0 0 20px rgba(201,168,76,0.3); }
+.day-content { width: calc(50% - 40px); background: rgba(255,255,255,0.05); border: 1px solid rgba(201,168,76,0.15); border-radius: 8px; padding: 1.5rem 2rem; backdrop-filter: blur(10px); transition: all 0.4s ease; }
+.day-content:hover { background: rgba(255,255,255,0.08); border-color: var(--gold); transform: translateY(-3px); }
+.day-content .date { color: var(--gold); font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 0.5rem; }
+.day-content h3 { color: var(--cream); font-size: 1.2rem; margin-bottom: 0.8rem; }
+.day-content ul { list-style: none; padding: 0; }
+.day-content ul li { position: relative; padding-left: 1.2rem; margin-bottom: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.75); line-height: 1.6; }
+.day-content ul li::before { content: '◆'; position: absolute; left: 0; color: var(--gold); font-size: 0.5rem; top: 0.3rem; }
+.timeline-day:nth-child(even) .day-content ul li { padding-left: 0; padding-right: 1.2rem; }
+.timeline-day:nth-child(even) .day-content ul li::before { left: auto; right: 0; }
+
+/* HOSPITALS */
+.hospitals { background: var(--cream); }
+.hospitals-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; max-width: 1200px; margin: 0 auto; }
+.hospital-card { flex: 0 0 280px; }
+.hospital-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 30px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.05); transition: all 0.4s ease; }
+.hospital-card:hover { transform: translateY(-8px); box-shadow: 0 15px 50px rgba(0,0,0,0.1); }
+.hospital-card-img { height: 200px; background-size: cover; background-position: center; position: relative; }
+.hospital-card-img .tag { position: absolute; top: 1rem; left: 1rem; background: var(--gold); color: var(--dark); padding: 0.3rem 0.8rem; font-size: 0.7rem; letter-spacing: 1px; border-radius: 2px; }
+.hospital-card-body { padding: 1.5rem; }
+.hospital-card-body h3 { font-size: 1.1rem; color: var(--dark); margin-bottom: 0.5rem; }
+.hospital-card-body p { font-size: 0.85rem; color: #777; line-height: 1.7; }
+.hospital-card-body .en-name { font-size: 0.8rem; color: var(--gold); margin-bottom: 0.5rem; font-style: italic; }
+
+/* EXCURSIONS */
+.excursions { background: linear-gradient(135deg, #1a1a2e, #2c1810); color: var(--cream); }
+.excursions .section-title h2 { color: var(--cream); }
+.excursions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+.exc-card { position: relative; border-radius: 12px; overflow: hidden; height: 300px; cursor: pointer; }
+.exc-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.exc-card:hover img { transform: scale(1.1); }
+.exc-card-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; background: linear-gradient(transparent, rgba(0,0,0,0.8)); }
+.exc-card-overlay h4 { color: var(--cream); font-size: 1rem; margin-bottom: 0.3rem; }
+.exc-card-overlay p { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
+
+/* REGISTRATION */
+.registration { background: var(--cream); }
+.reg-wrapper { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+.reg-info { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 5px 30px rgba(0,0,0,0.05); border: 1px solid rgba(201,168,76,0.1); }
+.reg-info h3 { color: var(--dark); font-size: 1.3rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #eee; }
+.reg-info ul { list-style: none; }
+.reg-info ul li { padding: 0.6rem 0; font-size: 0.9rem; color: #555; display: flex; gap: 0.8rem; align-items: flex-start; line-height: 1.5; }
+.reg-info ul li .check { color: var(--jade); font-weight: 700; flex-shrink: 0; }
+.reg-price { text-align: center; background: linear-gradient(135deg, var(--dark), #3d2b1f); padding: 2.5rem; border-radius: 12px; color: var(--cream); display: flex; flex-direction: column; justify-content: center; }
+.reg-price .amount { font-size: 3rem; font-weight: 700; font-family: 'Noto Serif KR', serif; background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.reg-price .label { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin: 0.5rem 0 1.5rem; letter-spacing: 1px; }
+.reg-price .includes { text-align: left; font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 2; }
+.reg-price .includes span { display: block; }
+
+/* FIRST INTERNSHIP GALLERY */
+.first-internship { background: linear-gradient(135deg, #faf5eb, #f5ead0); }
+.first-internship .section-title h2 { color: var(--dark); }
+.gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; max-width: 1200px; margin: 0 auto; }
+.gallery-grid img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; transition: transform 0.4s ease; cursor: pointer; }
+.gallery-grid img:hover { transform: scale(1.03); }
+
+/* CONTACT */
+.contact { background: var(--dark); color: var(--cream); }
+.contact .section-title h2 { color: var(--cream); }
+.contact-wrapper { max-width: 700px; margin: 0 auto; text-align: center; }
+.contact-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; padding: 2.5rem; }
+.contact-card .contact-photo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 1rem; border: 3px solid var(--gold); display: block; }
+.contact-card p { font-size: 0.95rem; color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; line-height: 1.8; }
+.contact-details { display: flex; flex-direction: column; gap: 0.8rem; }
+.contact-details a { color: var(--gold); text-decoration: none; font-size: 1rem; transition: color 0.3s ease; }
+.contact-details a:hover { color: var(--gold-light); }
+.contact-details .info { color: rgba(255,255,255,0.6); font-size: 0.85rem; }
+.contact-details .name { color: var(--gold); font-size: 1.1rem; font-weight: 600; }
+
+/* FOOTER */
+footer { background: #0d0d1a; padding: 2rem; text-align: center; color: rgba(255,255,255,0.4); font-size: 0.8rem; border-top: 1px solid rgba(201,168,76,0.1); }
+footer .gold { color: var(--gold); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+/* LOADER */
+#loader { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--dark); display: flex; align-items: center; justify-content: center; z-index: 10000; transition: opacity 0.8s ease; }
+#loader.hidden { opacity: 0; pointer-events: none; }
+.loader-content { text-align: center; }
+.loader-ornament { font-size: 2rem; color: var(--gold); margin-bottom: 1rem; }
+.loader-text { color: var(--cream); letter-spacing: 4px; font-size: 0.85rem; }
+.loader-bar { width: 200px; height: 1px; background: rgba(255,255,255,0.1); margin: 1rem auto; overflow: hidden; }
+.loader-bar-inner { height: 100%; width: 0; background: var(--gold); animation: loaderProgress 2s ease forwards; }
+@keyframes loaderProgress { to { width: 100%; } }
+
+/* PARALLAX */
+.parallax-section { position: relative; background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; min-height: 400px; display: flex; align-items: center; justify-content: center; }
+.parallax-section .overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); }
+.parallax-section .content { position: relative; z-index: 1; text-align: center; color: var(--cream); padding: 2rem; }
+.parallax-section .content h2 { font-size: clamp(1.5rem, 3vw, 2.5rem); margin-bottom: 1rem; }
+.parallax-section .content p { font-size: 1rem; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto; }
+
+/* BG IMAGES */
+.parallax-bg-1 { background-image: url('фото Сеул/отель сеул.jpg'); }
+.parallax-bg-2 { background-image: url('фото Сеул/центр 3.jpg'); }
+.hosp-bg-1 { background-image: url('фото Сеул/Ильсан больница.png'); }
+.hosp-bg-2 { background-image: url('фото Сеул/сеул 2.png'); }
+.hosp-bg-3 { background-image: url('фото Сеул/центр 2.jpg'); }
+.hosp-bg-4 { background-image: url('фото Сеул/центр1.jpg'); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  nav { padding: 1rem; }
+  .nav-links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(26,10,10,0.98); flex-direction: column; align-items: center; justify-content: center; gap: 2rem; z-index: 99; }
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 1.1rem; }
+  .hamburger { display: flex; z-index: 100; }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .about-image img { height: 250px; }
+  .about-stats { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+  .stat-item { padding: 1rem; }
+  .stat-number { font-size: 1.5rem; }
+  .timeline::before { left: 20px; }
+  .day-marker { left: 20px; }
+  .day-content, .timeline-day:nth-child(odd) .day-content { width: calc(100% - 50px); margin-left: 50px !important; padding-left: 1.5rem !important; text-align: left !important; }
+  .timeline-day:nth-child(even) .day-content ul li { padding-left: 1.2rem !important; padding-right: 0 !important; }
+  .timeline-day:nth-child(even) .day-content ul li::before { left: 0 !important; right: auto !important; }
+  .reg-wrapper { grid-template-columns: 1fr; }
+  .org-card { min-width: 200px; }
+  .hero-cta { flex-direction: column; align-items: center; }
+  section { padding: 4rem 1.5rem; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-content">
+    <div class="loader-ornament">&#xAE38;</div>
+    <div class="loader-text">СЕУЛ 2026</div>
+    <div class="loader-bar"><div class="loader-bar-inner"></div></div>
+  </div>
+</div>
+
+<canvas id="sakura-canvas"></canvas>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">&#xAE38; Seoul 2026</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#about">О стажировке</a></li>
+    <li><a href="#program">Программа</a></li>
+    <li><a href="#hospitals">Клиники</a></li>
+    <li><a href="#registration">Участие</a></li>
+    <li><a href="#contact">Контакты</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-badge">II Международная стажировка</div>
+    <div class="hero-ornament">&#xC54C;</div>
+    <h1 class="hero-title">Здравоохранение<br><span>Восточной Азии</span></h1>
+    <div class="hero-line"></div>
+    <p class="hero-subtitle">РЕСПУБЛИКА КОРЕЯ · СЕУЛ</p>
+    <div class="hero-date"><i>22</i> — <i>26</i> июня <i>2026</i></div>
+    <div class="hero-cta">
+      <a href="#program" class="btn btn-primary">Программа</a>
+      <a href="#registration" class="btn btn-outline">Регистрация</a>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="section-title reveal">
+    <div class="subtitle">О стажировке</div>
+    <h2>Вторая международная стажировочная сессия</h2>
+    <div class="divider"></div>
+    <p>Изучение передового опыта организации медицинской помощи, внедрения цифровых технологий и систем искусственного интеллекта в ведущих клиниках Южной Кореи</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-image reveal">
+      <img src="Сеул/pngtree-views-of-seoul-skyline-from-above-image_13149599.jpg" alt="Сеул">
+    </div>
+    <div class="about-text reveal">
+      <h3>«Здравоохранение Восточной Азии»</h3>
+      <p><strong>Дата проведения:</strong> 22–26 июня 2026 года</p>
+      <p><strong>Место проведения:</strong> г. Сеул и окрестности (Республика Корея)</p>
+      <p><strong>Вторая международная стажировочная сессия</strong> для руководителей и специалистов здравоохранения организована при участии ведущих медицинских центров Южной Кореи. Программа направлена на изучение передовых клинических и управленческих практик в здравоохранении, развитие межгосударственного профессионального диалога и адаптацию успешных зарубежных решений в систему здравоохранения регионов.</p>
+      <p>Ключевые темы стажировки: цифровая трансформация здравоохранения, внедрение систем искусственного интеллекта в клиническую практику, организация «умных больниц» (Smart Hospital), электронный документооборот (EMR), телемедицина, роботизированная хирургия, реабилитация с применением AI-технологий, система медицинского страхования Кореи (NHIS), управление качеством медицинской помощи и пациентоориентированность.</p>
+      <p>В программе: профессиональные визиты в медицинские учреждения высшего (третьего) уровня, круглые столы с корейскими коллегами, ознакомительные обходы отделений клиник, а также культурная программа, знакомящая с богатым историческим и культурным наследием Кореи.</p>
+      <div class="about-stats">
+        <div class="stat-item"><div class="stat-number">5</div><div class="stat-label">Дней</div></div>
+        <div class="stat-item"><div class="stat-number">4</div><div class="stat-label">Клиники</div></div>
+        <div class="stat-item"><div class="stat-number">30+</div><div class="stat-label">Участников</div></div>
+        <div class="stat-item"><div class="stat-number">июнь</div><div class="stat-label">2026</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="organizers">
+  <div class="section-title reveal">
+    <div class="subtitle">Организаторы</div>
+    <h2>Организаторы и партнёры</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="organizers-grid">
+    <div class="org-card reveal">
+      <div style="height:70px;display:flex;align-items:center;justify-content:center;margin-bottom:0.8rem">
+        <img src="Сеул/лого ркп.jpg" alt="РКП" style="max-height:100%;max-width:100%;object-fit:contain;border-radius:4px" onerror="this.style.display='none'">
+      </div>
+      <h4>Российско-Китайская Палата</h4>
+      <p>Организатор международных программ по развитию межрегионального сотрудничества в сфере здравоохранения</p>
+    </div>
+    <div class="org-card reveal">
+      <span class="icon">&#x1F30D;</span>
+      <h4>Деловой Совет по сотрудничеству с Монголией ТПП РФ</h4>
+      <p>Содействие развитию отраслевого взаимодействия экспертов и специалистов стран АТР</p>
+    </div>
+    <div class="org-card reveal">
+      <div style="height:70px;display:flex;align-items:center;justify-content:center;margin-bottom:0.8rem">
+        <img src="рук.png" alt="Отраслевой журнал Руководитель" style="max-height:100%;max-width:100%;object-fit:contain">
+      </div>
+      <h4>Отраслевой журнал «Руководитель»</h4>
+      <p>Информационная поддержка и освещение программы стажировки. Оператор мероприятия.</p>
+    </div>
+    <div class="org-card reveal">
+      <span class="icon">&#x1F4BC;</span>
+      <h4>Комитет по международному сотрудничеству МРО «Деловая Россия»</h4>
+      <p>Комитет по международному сотрудничеству в сфере здравоохранения</p>
+    </div>
+  </div>
+</section>
+
+<div class="parallax-section parallax-bg-1">
+  <div class="overlay"></div>
+  <div class="content reveal">
+    <h2>Отель проживания</h2>
+    <p style="font-size: 1.1rem; color: var(--gold); margin-bottom: 0.5rem;">Novotel Ambassador Seoul Yongsan</p>
+    <p>Отель 5★, расположенный на территории престижного комплекса <strong>Dragon City</strong> в районе Йонгсан</p>
+    <p style="margin-top: 0.6rem; font-size: 0.95rem;">Завтраки, обеды и ужины включены в программу</p>
+  </div>
+</div>
+
+<section class="program" id="program">
+  <div class="section-title reveal">
+    <div class="subtitle">Программа</div>
+    <h2>Профессиональная программа по дням</h2>
+    <div class="divider"></div>
+    <p>Насыщенная программа, сочетающая профессиональные визиты в ведущие клиники и культурные мероприятия</p>
+  </div>
+  <div class="timeline">
+    <div class="timeline-day reveal">
+      <div class="day-marker">1</div>
+      <div class="day-content">
+        <div class="date">22 июня · Понедельник</div>
+        <h3>Прибытие и культурная программа</h3>
+        <ul>
+          <li>Прибытие участников в международный аэропорт Инчхон</li>
+          <li>Трансфер и размещение в отеле 5* в г. Сеуле</li>
+          <li>Вечерняя обзорная экскурсия по Сеулу</li>
+          <li>Приветственный ужин</li>
+        </ul>
+      </div>
+    </div>
+    <div class="timeline-day reveal">
+      <div class="day-marker">2</div>
+      <div class="day-content">
+        <div class="date">23 июня · Вторник</div>
+        <h3>CHA Ilsan Medical Center</h3>
+        <ul>
+          <li>Посещение CHA Ilsan Medical Center — крупнейший специализированный центр для женщин и детей</li>
+          <li>Ознакомление с достижениями в области репродуктивной медицины и онкологии</li>
+          <li>Передовые AI-технологии и роботизированные системы в клинической практике</li>
+          <li>Посещение культурной программы</li>
+        </ul>
+      </div>
+    </div>
+    <div class="timeline-day reveal">
+      <div class="day-marker">3</div>
+      <div class="day-content">
+        <div class="date">24 июня · Среда</div>
+        <h3>SNUBH — Умная больница и инновации</h3>
+        <ul>
+          <li>Визит в Seoul National University Bundang Hospital (SNUBH) — Центр умных медицинских инноваций</li>
+          <li>Концепция «Умной больницы», система BESTCare, стратегия цифровой трансформации</li>
+          <li>Интеграция AI, Big Data, IoT и робототехники в медицинскую практику</li>
+          <li>Круглый стол с корейскими коллегами по управлению качеством</li>
+        </ul>
+      </div>
+    </div>
+    <div class="timeline-day reveal">
+      <div class="day-marker">4</div>
+      <div class="day-content">
+        <div class="date">25 июня · Четверг</div>
+        <h3>Sungkyunkwan University &amp; KHIDI</h3>
+        <ul>
+          <li>Визит в Sungkyunkwan University School — многопрофильная клиника, медицинские исследования и образование</li>
+          <li>Посещение KHIDI (Korea Health Industry Development Institute) — государственная поддержка индустрии здравоохранения</li>
+          <li>Сессия по продвижению K-Medical и корейской медицинской индустрии</li>
+          <li>Экскурсия по историческому центру Сеула и посещение дворца Кёнбоккун</li>
+        </ul>
+      </div>
+    </div>
+    <div class="timeline-day reveal">
+      <div class="day-marker">5</div>
+      <div class="day-content">
+        <div class="date">26 июня · Пятница</div>
+        <h3>Подведение итогов и отъезд</h3>
+        <ul>
+          <li>Заключительная сессия: обсуждение итогов стажировки</li>
+          <li>Вручение сертификатов участникам</li>
+          <li>Трансфер в аэропорт Инчхон</li>
+          <li>Вылет</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hospitals" id="hospitals">
+  <div class="section-title reveal">
+    <div class="subtitle">Медицинские учреждения</div>
+    <h2>Клиники — участники программы</h2>
+    <div class="divider"></div>
+    <p>Ведущие медицинские центры Южной Кореи самого высокого уровня</p>
+  </div>
+  <div class="hospitals-grid">
+    <div class="hospital-card reveal">
+      <div class="hospital-card-img hosp-bg-1"><div class="tag">CHA</div></div>
+      <div class="hospital-card-body">
+        <h3>CHA Ilsan Medical Center</h3>
+        <div class="en-name">CHA Ilsan Medical Center</div>
+        <p>Один из крупнейших специализированных медицинских центров для женщин и детей в Южной Корее. Известен своими достижениями в области репродуктивной медицины и онкологии.</p>
+      </div>
+    </div>
+    <div class="hospital-card reveal">
+      <div class="hospital-card-img hosp-bg-2"><div class="tag">SNUBH</div></div>
+      <div class="hospital-card-body">
+        <h3>SNUBH</h3>
+        <div class="en-name">Seoul National University Bundang Hospital</div>
+        <p>Центр умных медицинских инноваций при больнице Сеульского национального университета в Бундане. AI, Big Data, IoT и робототехника интегрированы в медицинскую практику. Цифровая трансформация, умные клинические процессы и автоматизация.</p>
+      </div>
+    </div>
+    <div class="hospital-card reveal">
+      <div class="hospital-card-img hosp-bg-3"><div class="tag">SKKU</div></div>
+      <div class="hospital-card-body">
+        <h3>Sungkyunkwan University School</h3>
+        <div class="en-name">Sungkyunkwan University School of Medicine</div>
+        <p>Одна из ведущих многопрофильных больниц Южной Кореи, связанная с медицинским факультетом Университета Sungkyunkwan. Диагностика, лечение, реабилитация, медицинские исследования и образование.</p>
+      </div>
+    </div>
+    <div class="hospital-card reveal">
+      <div class="hospital-card-img hosp-bg-4"><div class="tag">KHIDI</div></div>
+      <div class="hospital-card-body">
+        <h3>KHIDI</h3>
+        <div class="en-name">Korea Health Industry Development Institute</div>
+        <p>Государственное учреждение, оказывающее профессиональную и систематическую поддержку в развитии индустрии здравоохранения и совершенствовании медицинских услуг.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="parallax-section parallax-bg-2">
+  <div class="overlay"></div>
+  <div class="content reveal">
+    <h2>Культурная программа</h2>
+    <p>Дворец Кёнбоккун · Традиционные костюмы ханбок · Экскурсии по историческому центру Сеула</p>
+  </div>
+</div>
+
+<section class="excursions">
+  <div class="section-title reveal">
+    <div class="subtitle">Культурная программа</div>
+    <h2>Экскурсии и досуг</h2>
+    <div class="divider"></div>
+    <p>Богатая культурная программа, знакомящая с историей и традициями Кореи</p>
+  </div>
+  <div class="excursions-grid">
+    <div class="exc-card reveal">
+      <img src="фото Сеул/храм сеул.png" alt="Дворец Кёнбоккун" loading="lazy">
+      <div class="exc-card-overlay"><h4>Дворец Кёнбоккун</h4><p>Главный дворец династии Чосон — символ корейской истории</p></div>
+    </div>
+    <div class="exc-card reveal">
+      <img src="фото Сеул/костюмы.png" alt="Ханбок" loading="lazy">
+      <div class="exc-card-overlay"><h4>Традиционные костюмы ханбок</h4><p>Участники стажировки в традиционных корейских костюмах</p></div>
+    </div>
+    <div class="exc-card reveal">
+      <img src="фото Сеул/сеул 4.png" alt="Сеул" loading="lazy">
+      <div class="exc-card-overlay"><h4>Обзорная экскурсия по Сеулу</h4><p>Знакомство с главными достопримечательностями столицы Кореи</p></div>
+    </div>
+    <div class="exc-card reveal">
+      <img src="фото Сеул/яхтинг Сеул.png" alt="Вечерняя прогулка" loading="lazy">
+      <div class="exc-card-overlay"><h4>Вечерняя прогулка</h4><p>Наслаждение вечерним Сеулом</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="first-internship">
+  <div class="section-title reveal">
+    <div class="subtitle">Фотогалерея</div>
+    <h2>Моменты первой стажировки</h2>
+    <div class="divider"></div>
+    <p>Фотографии первой международной стажировочной сессии «Здравоохранение Восточной Азии» (13–17 апреля 2026 года)</p>
+  </div>
+  <div class="gallery-grid">
+    <img src="Сеул фото/5445382266742839529.jpg" alt="Первая стажировка" loading="lazy">
+    <img src="Сеул фото/5445382266742839532.jpg" alt="Первая стажировка" loading="lazy">
+    <img src="Сеул фото/5445382266742839533.jpg" alt="Первая стажировка" loading="lazy">
+    <img src="Сеул фото/5445382266742839535.jpg" alt="Первая стажировка" loading="lazy">
+    <img src="Сеул фото/5445382266742839537.jpg" alt="Первая стажировка" loading="lazy">
+    <img src="Сеул/photo_5190477886165552265_y.jpg" alt="Первая стажировка" loading="lazy">
+    <img src="Сеул/orig.jpeg" alt="Первая стажировка" loading="lazy">
+    <img src="Сеул/лого ркп.jpg" alt="Лого РКП" loading="lazy">
+  </div>
+</section>
+
+<section class="registration" id="registration">
+  <div class="section-title reveal">
+    <div class="subtitle">Участие</div>
+    <h2>Регистрация и условия участия</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="reg-wrapper">
+    <div class="reg-info reveal">
+      <h3>В стоимость включено</h3>
+      <ul>
+        <li><span class="check">&#x2713;</span> Аккредитация для участия в программе</li>
+        <li><span class="check">&#x2713;</span> Именной Сертификат участника программы</li>
+        <li><span class="check">&#x2713;</span> Портфель с информационными материалами и сувенирной продукцией</li>
+        <li><span class="check">&#x2713;</span> Участие во всех мероприятиях деловой программы</li>
+        <li><span class="check">&#x2713;</span> Трансфер из аэропорта Инчхон в гостиницу и обратно</li>
+        <li><span class="check">&#x2713;</span> Трансфер во все медицинские организации и на экскурсии</li>
+        <li><span class="check">&#x2713;</span> Сопровождение профессионального русскоговорящего гида-переводчика</li>
+        <li><span class="check">&#x2713;</span> Проживание в отеле 5* (4 суток с завтраками)</li>
+        <li><span class="check">&#x2713;</span> Питание: завтраки, обеды, ужины на время программы</li>
+        <li><span class="check">&#x2713;</span> Рабочие визиты во все клиники программы</li>
+        <li><span class="check">&#x2713;</span> Культурная программа: экскурсии, дворцы, традиционные костюмы</li>
+        <li><span class="check">&#x2713;</span> Сопровождение представителя оргкомитета во все дни</li>
+      </ul>
+    </div>
+      <div class="reg-price reveal">
+      <div class="label">Регистрационный взнос</div>
+      <div class="amount">379 000 &#x20BD;</div>
+      <div class="label">на 1 участника</div>
+      <div class="includes">
+        <span>Очный формат участия</span>
+        <span>22–26 июня 2026</span>
+        <span style="margin-top:1rem;font-size:0.8rem;color:var(--gold)">&#x2713; Закрывающие документы: ЭДО (Диадок) или оригиналы почтой России</span>
+      </div>
+      <a href="#contact" class="btn btn-primary" style="margin-top:1.5rem">Связаться с оргкомитетом</a>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="section-title reveal">
+    <div class="subtitle">Контакты</div>
+    <h2>Свяжитесь с нами</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="contact-wrapper">
+    <div class="contact-card reveal">
+      <img src="Новская.png" alt="Новская Надежда Витальевна" class="contact-photo">
+      <p>По всем вопросам участия в Международной стажировке<br>«Здравоохранение Восточной Азии», пожалуйста, обращайтесь:</p>
+      <div class="contact-details">
+        <div class="name">Новская Надежда Витальевна</div>
+        <div class="info">Координатор по международным проектам в сфере здравоохранения и медицинского туризма</div>
+        <a href="tel:+79152618202">+7 (915) 261-82-02</a>
+        <a href="mailto:n.filatova@orukovodstve.ru">n.filatova@orukovodstve.ru</a>
+        <div style="margin-top:1.5rem;border-top:1px solid rgba(201,168,76,0.2);padding-top:1.5rem">
+          <div class="info">Организатор: Российско-Китайская Палата</div>
+          <div class="info">Секретариат Российско-Китайской Палаты</div>
+          <div class="info">При организационной поддержке Посольства Республики Корея и KOTRA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 <span class="gold">II Международная стажировка «Здравоохранение Восточной Азии»</span><br>Республика Корея, Сеул · 22–26 июня 2026 года</p>
+  <p style="margin-top:0.5rem;font-size:0.7rem">Сделано с уважением к корейской культуре</p>
+</footer>
+
+<script>
+const canvas = document.getElementById('sakura-canvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+
+const petals = [];
+const COUNT = 60;
+class Petal {
+  constructor() { this.reset(); }
+  reset() { this.x = Math.random() * W; this.y = Math.random() * H - H; this.size = Math.random() * 8 + 4; this.speedY = Math.random() * 1.2 + 0.4; this.speedX = Math.random() * 1.5 - 0.75; this.rotation = Math.random() * Math.PI * 2; this.rotSpeed = (Math.random() - 0.5) * 0.02; this.opacity = Math.random() * 0.5 + 0.3; this.shape = Math.random(); }
+  update() { this.y += this.speedY; this.x += this.speedX + Math.sin(this.y * 0.01) * 0.3; this.rotation += this.rotSpeed; if (this.y > H + 20) { this.reset(); this.y = -20; } if (this.x > W + 20) this.x = -20; if (this.x < -20) this.x = W + 20; }
+  draw() {
+    ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.rotation); ctx.globalAlpha = this.opacity; ctx.fillStyle = '#f7c9d6';
+    ctx.beginPath();
+    if (this.shape < 0.5) { ctx.ellipse(0, 0, this.size, this.size * 0.6, 0, 0, Math.PI * 2); }
+    else { const r = this.size; for (let i = 0; i < 5; i++) { const a = (i * 2 * Math.PI) / 5 - Math.PI / 2; i === 0 ? ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r) : ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r); const ca = a + Math.PI / 5; ctx.quadraticCurveTo(Math.cos(ca) * r * 0.4, Math.sin(ca) * r * 0.4, Math.cos((i + 1) * 2 * Math.PI / 5 - Math.PI / 2) * r, Math.sin((i + 1) * 2 * Math.PI / 5 - Math.PI / 2) * r); }
+    ctx.closePath(); }
+    ctx.fill(); ctx.restore();
+  }
+}
+for (let i = 0; i < COUNT; i++) { const p = new Petal(); p.y = Math.random() * H; petals.push(p); }
+function animatePetals() { ctx.clearRect(0, 0, W, H); petals.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animatePetals); }
+animatePetals();
+
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 100); });
+
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('nav-links');
+hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); navLinks.classList.toggle('open'); });
+navLinks.querySelectorAll('a').forEach(a => { a.addEventListener('click', () => { hamburger.classList.remove('open'); navLinks.classList.remove('open'); }); });
+
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); } }); }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+revealElements.forEach(el => revealObserver.observe(el));
+
+window.addEventListener('load', () => { setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 2000); });
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => { anchor.addEventListener('click', function(e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }); });
+</script>
+</body>
+</html>
